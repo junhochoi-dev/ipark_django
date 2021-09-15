@@ -19,6 +19,9 @@ from rest_framework import routers
 from django.conf.urls import url, include
 from ido.views import memberDataViewset,covidRecordViewset,liveDataViewset,historicalRecordViewset
 
+
+admin.autodiscover()
+admin.site.enable_nav_sidebar = False
 router = routers.DefaultRouter()
 router.register('liveData',liveDataViewset)
 router.register('historicalRecord',historicalRecordViewset)

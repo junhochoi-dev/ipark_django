@@ -1,3 +1,4 @@
+-f /usr/share/pip-wheels
 absl-py==0.8.1
 aenum==2.2.2
 aggdraw==1.3.11
@@ -11,7 +12,6 @@ arrow==0.15.2
 asn1crypto==1.2.0
 astor==0.8.0
 astropy==2.0.16
-async==0.6.2
 async==0.6.2
 atomicwrites==1.3.0
 attrs==19.3.0
@@ -93,6 +93,7 @@ django-openid-auth==0.15
 django-registration==3.0.1
 django-sekizai==1.0.0
 django-social-auth==0.7.28
+django-suit==2.0a1
 django-tagging==0.4.6
 django-treebeard==4.3
 django-xmlrpc==0.1.8
