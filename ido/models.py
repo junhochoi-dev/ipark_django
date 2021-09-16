@@ -1,4 +1,6 @@
 from django.db import models
+from datetime import datetime,timedelta
+from django.utils.dateformat import DateFormat
 
 #from phonenumber_field.modelfields import PhoneNumberField
 
@@ -18,15 +20,41 @@ class liveData(models.Model):
 
 
 class memberData(models.Model): # 이번달 사용자 DB (액셀에서 받아온거) ##field는 import를 위해 늘림
-    num = models.CharField(max_length=100000,default = '')              # 순번
-    graduate = models.CharField(max_length=20,default = '')          # 대학원/학부
+    num = models.CharField(max_length=100000,default = '',help_text='순번 ex)3월 아침 1번째, 3월 종일 1번째')              # 순번
+
+    graduate_status = (
+
+        ( '학부생', '학부생'),
+        ('대학원생', '대학원생'),
+        ( '교직원', '교직원'),
+        )
+
+    graduate = models.CharField(max_length=20,choices=graduate_status)          # 대학원/학부
     major = models.CharField(max_length=40,default = '')              # 학과
     student_num = models.CharField(max_length=20,default = '')        # 학번
     name = models.CharField(max_length=40,default = '')               # 이름
-    email = models.CharField(default = '',max_length=128, primary_key=True)             # 이메일-primary
+    email = models.CharField(default = '',max_length=128, primary_key=True,help_text='꼭 학교 이메일만  사용하고  ***@korea 까지만 저장해주세요!!!')             # 이메일-primary
     phone_num = models.CharField(max_length=15,default = '',null=True)          # 번호
-    reserve_product =  models.CharField(max_length=10,default = '')   # 예약상품
-    price = models.CharField(max_length=20,default = '')              #120000/30000
+
+    reserve_status = (
+        (str(datetime.now().month)+'월 종일', str(datetime.now().month)+'월 종일'),
+        ( str(datetime.now().month)+'월 아침 ',str(datetime.now().month)+'월 아침 '),
+        (str(datetime.now().month+1)+'월 종일',str(datetime.now().month+1)+'월 종일'),
+        (str(datetime.now().month+1)+'월 아침 ', str(datetime.now().month+1)+'월 아침 '),
+        ('학기 종일', '학기 종일'),
+        ('학기 아침 ', '학기 아침 '),
+        )
+
+    reserve_product =  models.CharField(max_length=10,choices=reserve_status)   # 예약상품
+
+    price_status = (
+        ('12', '120,000'),
+        ('4', '40,000'),
+        ('3', '30,000'),
+        ('1', '10,000'),
+        )
+
+    price = models.CharField(max_length=20,choices=price_status)              #120000/30000
 
     objects = models.Manager()
 
