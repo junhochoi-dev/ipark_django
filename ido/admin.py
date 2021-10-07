@@ -49,7 +49,7 @@ class memberDataCustom(ImportExportMixin, admin.ModelAdmin):
     actions = ['move_to_Live']  # move_to_Live
 
 
-    list_max_show_all = 500
+    list_max_show_all = 5000
     list_per_page = 100
 
     def move_to_Live(self, request, queryset):  #

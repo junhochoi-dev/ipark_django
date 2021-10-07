@@ -1,7 +1,7 @@
 from django.db import models
 from datetime import datetime,timedelta
 from django.utils.dateformat import DateFormat
-
+from dateutil.relativedelta import relativedelta
 #from phonenumber_field.modelfields import PhoneNumberField
 
 
@@ -36,16 +36,21 @@ class memberData(models.Model): # 이번달 사용자 DB (액셀에서 받아온
     email = models.CharField(default = '',max_length=128, primary_key=True,help_text='꼭 학교 이메일만  사용하고  ***@korea 까지만 저장해주세요!!!')             # 이메일-primary
     phone_num = models.CharField(max_length=15,default = '',null=True)          # 번호
 
-    reserve_status = (
-        (str(datetime.now().month)+'월 종일', str(datetime.now().month)+'월 종일'),
-        ( str(datetime.now().month)+'월 아침 ',str(datetime.now().month)+'월 아침 '),
-        (str(datetime.now().month+1)+'월 종일',str(datetime.now().month+1)+'월 종일'),
-        (str(datetime.now().month+1)+'월 아침 ', str(datetime.now().month+1)+'월 아침 '),
-        ('학기 종일', '학기 종일'),
-        ('학기 아침 ', '학기 아침 '),
-        )
+    # reserve_status = (
+    #     (datetime.now().strftime('%-m')+'월 종일', datetime.now().strftime('%-m')+'월 종일'),
+    #     (datetime.now().strftime('%-m')+'월 아침', datetime.now().strftime('%-m')+'월 아침'),
+    #     ((datetime.now()+relativedelta(months=1)).strftime('%m')+'월 종일',(datetime.now()+relativedelta(months=1)).strftime('%m')+'월 종일'),
+    #     ((datetime.now()+relativedelta(months=1)).strftime('%m')+'월 아침',(datetime.now()+relativedelta(months=1)).strftime('%m')+'월 아침'),
+    #     ('1학기 종일', '1학기 종일'),
+    #     ('1학기 아침', '1학기 아침'),
+    #     ('2학기 종일', '2학기 종일'),
+    #     ('2학기 아침', '2학기 아침'),
 
-    reserve_product =  models.CharField(max_length=10,choices=reserve_status)   # 예약상품
+    #     )
+
+    # reserve_product =  models.CharField(max_length=100,choices=reserve_status)   # 예약상품
+
+    reserve_product =  models.CharField(max_length=100,default = '')   # 예약상품
 
     price_status = (
         ('12', '120,000'),
