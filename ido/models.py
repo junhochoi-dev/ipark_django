@@ -40,8 +40,9 @@ class memberData(models.Model): # 이번달 사용자 DB (액셀에서 받아온
     image = models.ImageField(upload_to="member",default='default.jpg')  ##프로필 담을 이미지 필드
 
     def image_tag(self):
-        return mark_safe('<img src="%s" width="150" height="150" />' % (self.image.url))
-
+        if(self.image.url != "default.jpg"):
+            return mark_safe('<img src="%s" width="100" height="100" />' % (self.image.url))
+        
     image_tag.short_description = 'Image'
 
 
@@ -91,7 +92,8 @@ class Notice(models.Model):                                             # 공지
     image = models.ImageField(upload_to="notice",default='default.jpg')  ##프로필 담을 이미지 필드
 
     def image_tag(self):
-        return mark_safe('<img src="%s" width="150" height="150" />' % (self.image.url))
+        if(self.image.url != "/media/default.jpg"):
+            return mark_safe('<img src="%s" width="100" height="100" />' % (self.image.url))
 
     image_tag.short_description = 'Image'
     class Meta:       
@@ -105,7 +107,8 @@ class Lost_Found(models.Model):                                             # �
     image = models.ImageField(upload_to="lost_found",default='default.jpg')  ##프로필 담을 이미지 필드
 
     def image_tag(self):
-        return mark_safe('<img src="%s" width="150" height="150" />' % (self.image.url))
+        if(self.image.url != "/media/default.jpg"):
+            return mark_safe('<img src="%s" width="100" height="100" />' % (self.image.url))
 
     image_tag.short_description = 'Image'
     class Meta:       
@@ -119,7 +122,8 @@ class Complain(models.Model):                                             # 공�
     image = models.ImageField(upload_to="complain",default='default.jpg')  ##프로필 담을 이미지 필드
 
     def image_tag(self):
-        return mark_safe('<img src="%s" width="80" height="80" />' % (self.image.url))
+        if(self.image.url != "/media/default.jpg"):
+            return mark_safe('<img src="%s" width="100" height="100" />' % (self.image.url))
 
     image_tag.short_description = 'Image'
     class Meta:       
