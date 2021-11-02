@@ -42,12 +42,13 @@ class memberDataCustom(ImportExportMixin, admin.ModelAdmin):
     resource_class=MemberResource
     #self.get_queryset().objects.update(email=Replace('email', Value('.ac.kr'), Value('')))
     #memberData.objects.update(email=Replace('email', Value('.ac.kr'), Value('')))
-    list_display = ['name', 'major', 'student_num', 'phone_num', 'reserve_product', 'email']
+    list_display = ['name', 'major', 'student_num', 'phone_num', 'reserve_product', 'email','image_tag']
     ordering = ['name']
     #list_filter = ['name']
     search_fields = ['name', 'major', 'student_num', 'phone_num', 'reserve_product', 'email']
     actions = ['move_to_Live']  # move_to_Live
-
+    # fields = ( 'image_tag', )
+    readonly_fields = ('image_tag',)
 
     list_max_show_all = 5000
     list_per_page = 100

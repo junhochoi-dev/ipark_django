@@ -2,6 +2,7 @@ from django.db import models
 from datetime import datetime,timedelta
 from django.utils.dateformat import DateFormat
 from dateutil.relativedelta import relativedelta
+from django.utils.html import mark_safe
 #from phonenumber_field.modelfields import PhoneNumberField
 
 
@@ -35,20 +36,13 @@ class memberData(models.Model): # 이번달 사용자 DB (액셀에서 받아온
     name = models.CharField(max_length=40,default = '')               # 이름
     email = models.CharField(default = '',max_length=128, primary_key=True,help_text='꼭 학교 이메일만  사용하고  ***@korea 까지만 저장해주세요!!!')             # 이메일-primary
     phone_num = models.CharField(max_length=15,default = '',null=True)          # 번호
+    image = models.ImageField(upload_to="member",default='default.jpg')
 
-    # reserve_status = (
-    #     (datetime.now().strftime('%-m')+'월 종일', datetime.now().strftime('%-m')+'월 종일'),
-    #     (datetime.now().strftime('%-m')+'월 아침', datetime.now().strftime('%-m')+'월 아침'),
-    #     ((datetime.now()+relativedelta(months=1)).strftime('%m')+'월 종일',(datetime.now()+relativedelta(months=1)).strftime('%m')+'월 종일'),
-    #     ((datetime.now()+relativedelta(months=1)).strftime('%m')+'월 아침',(datetime.now()+relativedelta(months=1)).strftime('%m')+'월 아침'),
-    #     ('1학기 종일', '1학기 종일'),
-    #     ('1학기 아침', '1학기 아침'),
-    #     ('2학기 종일', '2학기 종일'),
-    #     ('2학기 아침', '2학기 아침'),
+    def image_tag(self):
+        return mark_safe('<img src="%s" width="150" height="150" />' % (self.image.url))
 
-    #     )
+    image_tag.short_description = 'Image'
 
-    # reserve_product =  models.CharField(max_length=100,choices=reserve_status)   # 예약상품
 
     reserve_product =  models.CharField(max_length=100,default = '')   # 예약상품
 
@@ -57,6 +51,7 @@ class memberData(models.Model): # 이번달 사용자 DB (액셀에서 받아온
         ('4', '40,000'),
         ('3', '30,000'),
         ('1', '10,000'),
+        ('0', '0'),
         )
 
     price = models.CharField(max_length=20,choices=price_status)              #120000/30000

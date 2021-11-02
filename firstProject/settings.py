@@ -33,6 +33,7 @@ INSTALLED_APPS = [
     'ido.apps.IdoConfig',
     'rest_framework',
     'import_export',
+    'django_cleanup.apps.CleanupConfig',
 
 
 ]
@@ -146,7 +147,8 @@ USE_TZ = False
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'static')
 ]
-
+MEDIA_URL = '/media/' 
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 STATIC_URL = '/static/'
 #STATIC_ROOT = os.path.join(BASE_DIR, 'static')
