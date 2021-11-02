@@ -15,7 +15,8 @@ class liveData(models.Model):
     enter_time = models.CharField(null=True,default='',max_length=50)  # 입장시간
     reserve_product =  models.CharField(max_length=10,default = '')   # 예약상품
     objects = models.Manager() # ~has no member vscode 에러 해결코드
-
+    class Meta:        
+        verbose_name_plural = 'Live Data'
     def __str__(self):
         return str(self.name) if self.name else ''
 
@@ -36,7 +37,7 @@ class memberData(models.Model): # 이번달 사용자 DB (액셀에서 받아온
     name = models.CharField(max_length=40,default = '')               # 이름
     email = models.CharField(default = '',max_length=128, primary_key=True,help_text='꼭 학교 이메일만  사용하고  ***@korea 까지만 저장해주세요!!!')             # 이메일-primary
     phone_num = models.CharField(max_length=15,default = '',null=True)          # 번호
-    image = models.ImageField(upload_to="member",default='default.jpg')
+    image = models.ImageField(upload_to="member",default='default.jpg')  ##프로필 담을 이미지 필드
 
     def image_tag(self):
         return mark_safe('<img src="%s" width="150" height="150" />' % (self.image.url))
@@ -55,7 +56,9 @@ class memberData(models.Model): # 이번달 사용자 DB (액셀에서 받아온
         )
 
     price = models.CharField(max_length=20,choices=price_status)              #120000/30000
-
+    class Meta:        
+        verbose_name_plural = 'Member Data'
+    
     objects = models.Manager()
 
 
@@ -77,8 +80,50 @@ class covidRecord(models.Model): # 코로나 추적 DB & graph show function & a
     enter_time = models.CharField(default='',max_length=50)  # 입장시간
     id  = models.AutoField(primary_key=True)
 
+    class Meta:       
+        verbose_name_plural = 'Covid Record'
     objects = models.Manager()
 
+class Notice(models.Model):                                             # 공지사항 게시판
+    title = models.CharField(max_length=40,default = '')                 # 제목
+    paragraph = models.TextField()                                         # 본문
+    id  = models.AutoField(primary_key=True)                             #키 값
+    image = models.ImageField(upload_to="notice",default='default.jpg')  ##프로필 담을 이미지 필드
 
+    def image_tag(self):
+        return mark_safe('<img src="%s" width="150" height="150" />' % (self.image.url))
+
+    image_tag.short_description = 'Image'
+    class Meta:       
+        verbose_name_plural = '공지사항'
+    objects = models.Manager()
+
+class Lost_Found(models.Model):                                             # 공지사항 게시판
+    title = models.CharField(max_length=40,default = '')                 # 제목
+    paragraph = models.TextField()             # 본문
+    id  = models.AutoField(primary_key=True)                             #키 값
+    image = models.ImageField(upload_to="lost_found",default='default.jpg')  ##프로필 담을 이미지 필드
+
+    def image_tag(self):
+        return mark_safe('<img src="%s" width="150" height="150" />' % (self.image.url))
+
+    image_tag.short_description = 'Image'
+    class Meta:       
+        verbose_name_plural = '분실물 게시판'
+    objects = models.Manager()
+
+class Complain(models.Model):                                             # 공지사항 게시판
+    title = models.CharField(max_length=40,default = '')                 # 제목
+    paragraph = models.TextField()                                          # 본문
+    id  = models.AutoField(primary_key=True)                             #키 값
+    image = models.ImageField(upload_to="complain",default='default.jpg')  ##프로필 담을 이미지 필드
+
+    def image_tag(self):
+        return mark_safe('<img src="%s" width="80" height="80" />' % (self.image.url))
+
+    image_tag.short_description = 'Image'
+    class Meta:       
+        verbose_name_plural = '불편사항'
+    objects = models.Manager()
 
 

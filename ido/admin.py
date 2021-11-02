@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import liveData,memberData,historicalRecord,covidRecord
+from .models import liveData,memberData,historicalRecord,covidRecord,Notice,Lost_Found,Complain
 from import_export.admin import ImportExportMixin, ImportMixin
 import datetime
 
@@ -26,28 +26,22 @@ class MemberResource(resources.ModelResource):
 
     def before_import_row(self, row, **kwargs):
         row['email'] = row['email'].replace('.ac.kr','')
+        row['email'] = row['email'].replace('.com','')
 
     class Meta:
-        model = memberData
-        #fields =('num','graduate','major','student_num','name','email','phone_num','reserve_product','price')
-        #exclude = ('name',)
-        #exclude = ('num',)
+        model = memberData       
         import_id_fields = ('email',)
-        #resources.ModelResource.get_queryset().objects.update(email=Replace('email', Value('.ac.kr'), Value('')))
+        
 
 
 
 class memberDataCustom(ImportExportMixin, admin.ModelAdmin):
 
-    resource_class=MemberResource
-    #self.get_queryset().objects.update(email=Replace('email', Value('.ac.kr'), Value('')))
-    #memberData.objects.update(email=Replace('email', Value('.ac.kr'), Value('')))
-    list_display = ['name', 'major', 'student_num', 'phone_num', 'reserve_product', 'email','image_tag']
-    ordering = ['name']
-    #list_filter = ['name']
+    resource_class=MemberResource   
+    list_display = ['name', 'major', 'student_num', 'phone_num', 'reserve_product', 'email']
+    ordering = ['name']  
     search_fields = ['name', 'major', 'student_num', 'phone_num', 'reserve_product', 'email']
-    actions = ['move_to_Live']  # move_to_Live
-    # fields = ( 'image_tag', )
+    actions = ['move_to_Live']  # move_to_Live   
     readonly_fields = ('image_tag',)
 
     list_max_show_all = 5000
@@ -91,9 +85,26 @@ class covidRecordCustom(admin.ModelAdmin):
     search_fields =['name','student_num']
 
 
+class NoticeCustom(admin.ModelAdmin):
+    list_display = ['title','paragraph','image_tag']   
+    readonly_fields = ('image_tag',)
+    search_fields = ['title','paragraph']
+
+
+class Lost_FoundCustom(admin.ModelAdmin):
+    list_display = ['title','paragraph','image_tag']   
+    readonly_fields = ('image_tag',)
+    search_fields = ['title','paragraph']
+
+class ComplainCustom(admin.ModelAdmin):
+    list_display = ['title','paragraph','image_tag']   
+    readonly_fields = ('image_tag',)
+    search_fields = ['title','paragraph']
 
 admin.site.register(liveData,liveDataCustom)
 admin.site.register(memberData,memberDataCustom)
 #admin.site.register(historicalRecord,historicalRecordCustom)
 admin.site.register(covidRecord,covidRecordCustom)
-
+admin.site.register(Notice,NoticeCustom)
+admin.site.register(Lost_Found,Lost_FoundCustom)
+admin.site.register(Complain,ComplainCustom)
