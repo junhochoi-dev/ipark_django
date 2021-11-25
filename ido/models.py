@@ -38,7 +38,7 @@ class memberData(models.Model): # 이번달 사용자 DB (액셀에서 받아온
     email = models.CharField(default = '',max_length=128, primary_key=True,help_text='꼭 학교 이메일만  사용하고  ***@korea 까지만 저장해주세요!!!')             # 이메일-primary
     phone_num = models.CharField(max_length=15,default = '',null=True)          # 번호
     image = models.ImageField(upload_to="member",default='default.jpg')  ##프로필 담을 이미지 필드
-
+    
     def image_tag(self):
         if(self.image.url != "default.jpg"):
             return mark_safe('<img src="%s" width="100" height="100" />' % (self.image.url))
@@ -49,17 +49,18 @@ class memberData(models.Model): # 이번달 사용자 DB (액셀에서 받아온
     reserve_product =  models.CharField(max_length=100,default = '')   # 예약상품
 
     price_status = (
-        ('12', '120,000'),
-        ('4', '40,000'),
-        ('3', '30,000'),
-        ('1', '10,000'),
+        ('120,000', '120,000'),
+        ('40,000', '40,000'),
+        ('30,000', '30,000'),
+        ('10,000', '10,000'),
         ('0', '0'),
         )
 
-    price = models.CharField(max_length=20,choices=price_status)              #120000/30000
+    price = models.CharField(max_length=20,null=False,choices=price_status)              #120000/30000
     class Meta:        
         verbose_name_plural = 'Member Data'
     
+    covid_vaccine=models.BooleanField(default =False )
     objects = models.Manager()
 
 

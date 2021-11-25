@@ -2,7 +2,6 @@ from django.contrib import admin
 from .models import liveData,memberData,historicalRecord,covidRecord,Notice,Lost_Found,Complain
 from import_export.admin import ImportExportMixin, ImportMixin
 import datetime
-
 from django.db import IntegrityError
 from import_export.admin import ImportExportActionModelAdmin
 from import_export import resources, fields
@@ -12,7 +11,7 @@ from django.db.models.functions import Replace
 
 class liveDataCustom(admin.ModelAdmin):
     list_display = ['name', 'major', 'student_num', 'reserve_product', 'enter_time']
-    ordering = ['enter_time']
+    ordering = ['-enter_time']
     #list_filter = ['name']
     search_fields = ['name', 'major', 'student_num', 'phone_num', 'reserve_product']
 
@@ -38,7 +37,7 @@ class MemberResource(resources.ModelResource):
 class memberDataCustom(ImportExportMixin, admin.ModelAdmin):
 
     resource_class=MemberResource   
-    list_display = ['name', 'major', 'student_num', 'phone_num', 'reserve_product', 'email']
+    list_display = ['name', 'major', 'student_num', 'phone_num', 'reserve_product', 'email','covid_vaccine']
     ordering = ['name']  
     search_fields = ['name', 'major', 'student_num', 'phone_num', 'reserve_product', 'email']
     actions = ['move_to_Live']  # move_to_Live   
