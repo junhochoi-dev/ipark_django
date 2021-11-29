@@ -12,6 +12,6 @@ os.environ.setdefault("DJANGO_SETTINGS_MODULE", "firstProject.settings")
 django.setup()
 from ido.models import liveData
 
-now = datetime.datetime.now() - datetime.timedelta(hours=3)
+now = datetime.datetime.now() - datetime.timedelta(hours=2)
 nowDatetime = now.strftime('%Y/%m/%d %H:%M:%S')
 liveData.objects.filter(enter_time__lt=nowDatetime).delete()

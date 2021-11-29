@@ -8,7 +8,8 @@ from import_export import resources, fields
 from import_export.widgets import ForeignKeyWidget
 from django.db.models import Value
 from django.db.models.functions import Replace
-
+from .views import upload_file
+from django.conf.urls import  url
 class liveDataCustom(admin.ModelAdmin):
     list_display = ['name', 'major', 'student_num', 'reserve_product', 'enter_time']
     ordering = ['-enter_time']
@@ -37,7 +38,7 @@ class MemberResource(resources.ModelResource):
 class memberDataCustom(ImportExportMixin, admin.ModelAdmin):
 
     resource_class=MemberResource   
-    list_display = ['name', 'major', 'student_num', 'phone_num', 'reserve_product', 'email','covid_vaccine']
+    list_display = ['name', 'major', 'student_num', 'phone_num', 'reserve_product', 'email','covid_vaccine','online_offline','image_tag']
     ordering = ['name']  
     search_fields = ['name', 'major', 'student_num', 'phone_num', 'reserve_product', 'email']
     actions = ['move_to_Live']  # move_to_Live   
@@ -45,9 +46,13 @@ class memberDataCustom(ImportExportMixin, admin.ModelAdmin):
 
     list_max_show_all = 5000
     list_per_page = 100
+    change_list_template = "upload.html"
+    def get_urls(self):
+        urls = super().get_urls()
+        my_urls =[ url(r"^upload/$", upload_file)]        
+        return my_urls + urls
 
     def move_to_Live(self, request, queryset):  #
-
         qs = queryset.values()  # 체크박스로 입력된 쿼리값들 받아옴
 
         for q in range(len(qs)):

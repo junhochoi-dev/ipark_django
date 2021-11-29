@@ -18,6 +18,7 @@ from django.urls import path
 from rest_framework import routers
 from django.conf.urls import url, include
 from ido.views import memberDataViewset,covidRecordViewset,liveDataViewset,historicalRecordViewset,noticeViewset,lost_foundViewset,complainViewset
+from ido.views import upload_file
 from django.conf import settings 
 from django.conf.urls.static import static 
 
@@ -31,10 +32,12 @@ router.register('covidRecord',covidRecordViewset)
 router.register('notice',noticeViewset)
 router.register('lost_found',lost_foundViewset)
 router.register('complain',complainViewset)
+
 urlpatterns = [
     path('admin/', admin.site.urls,),
     url(r'^',include(router.urls)),
     url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework')),
+    path('upload/',upload_file,name="upload_file"),
 ]
 if settings.DEBUG:     
      urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
