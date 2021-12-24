@@ -38,7 +38,7 @@ class MemberResource(resources.ModelResource):
 class memberDataCustom(ImportExportMixin, admin.ModelAdmin):
 
     resource_class=MemberResource   
-    list_display = ['name', 'major', 'student_num', 'phone_num', 'reserve_product', 'email','covid_vaccine','online_offline','image_tag']
+    list_display = ['name', 'major', 'student_num', 'phone_num', 'reserve_product', 'email','covid_vaccine','Registration','image_tag']
     ordering = ['name']  
     search_fields = ['name', 'major', 'student_num', 'phone_num', 'reserve_product', 'email']
     actions = ['move_to_Live']  # move_to_Live   

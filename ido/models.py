@@ -22,7 +22,7 @@ class liveData(models.Model):
 
 
 class memberData(models.Model): # 이번달 사용자 DB (액셀에서 받아온거) ##field는 import를 위해 늘림
-    num = models.CharField(max_length=100000,default = '',help_text='순번 ex)3월 아침 1번째, 3월 종일 1번째')              # 순번
+    num = models.CharField(blank=True,max_length=100000,default = '',help_text='순번 ex)3월 아침 1번째, 3월 종일 1번째')              # 순번
 
     graduate_status = (
 
@@ -31,8 +31,8 @@ class memberData(models.Model): # 이번달 사용자 DB (액셀에서 받아온
         ( '교직원', '교직원'),
         )
 
-    graduate = models.CharField(max_length=20,choices=graduate_status)          # 대학원/학부
-    major = models.CharField(max_length=40,default = '')              # 학과
+    graduate = models.CharField(blank=True,max_length=20,choices=graduate_status)          # 대학원/학부
+    major = models.CharField(blank=True,max_length=40,default = '')              # 학과
     student_num = models.CharField(max_length=20,default = '')        # 학번
     name = models.CharField(max_length=40,default = '')               # 이름
     email = models.CharField(default = '',max_length=128, primary_key=True,help_text='학교 이메일 사용을 권장하며  ***@korea 까지만 저장해주세요!! 부득이하게 gmail 사용시 ***@gmail 까지만 저장해주세요')             # 이메일-primary
@@ -46,7 +46,7 @@ class memberData(models.Model): # 이번달 사용자 DB (액셀에서 받아온
     image_tag.short_description = 'Image'
 
 
-    reserve_product =  models.CharField(max_length=100,default = '',help_text="ex) 2학기 종일,2학기 아침,11월 아침,11월 종일,여자축구부")   # 예약상품
+    reserve_product =  models.CharField(blank=True,max_length=100,default = '',help_text="ex) 2학기 종일,2학기 아침,11월 아침,11월 종일,여자축구부")   # 예약상품
 
     price_status = (
         ('120,000', '120,000'),
@@ -56,15 +56,16 @@ class memberData(models.Model): # 이번달 사용자 DB (액셀에서 받아온
         ('10,000', '10,000'),
         ('0', '0'),
         )
-    price = models.CharField(max_length=20,null=False,choices=price_status)              #120000/30000
+    price = models.CharField(blank=True,max_length=20,null=False,choices=price_status)              #120000/30000
     class Meta:        
         verbose_name_plural = 'Member Data'
     on_off_status=(
         ("현장 접수","현장 접수"),
         ("온라인 접수","온라인 접수"),
     )
-    online_offline= models.CharField(default="", null=False,max_length=30,choices=on_off_status)
-    worker = models.CharField(default="",max_length=30,help_text="현장 등록 당시 근무자 이름을 기입해주세요")
+    Registration= models.CharField(blank=True,default="", null=False,max_length=30,choices=on_off_status)
+    worker = models.CharField(blank=True,default="",max_length=30,help_text="현장 등록 당시 근무자 이름을 기입해주세요")
+    memo = models.CharField(blank=True,default="",max_length=30,help_text="특이사항을 기록해주세요")
     covid_vaccine=models.BooleanField(default =False )
     objects = models.Manager()
 
