@@ -62,6 +62,7 @@ class memberData(models.Model): # 이번달 사용자 DB (액셀에서 받아온
     on_off_status=(
         ("현장 접수","현장 접수"),
         ("온라인 접수","온라인 접수"),
+        ("양도","양도"),
     )
     Registration= models.CharField(blank=True,default="", null=False,max_length=30,choices=on_off_status)
     worker = models.CharField(blank=True,default="",max_length=30,help_text="현장 등록 당시 근무자 이름을 기입해주세요")
