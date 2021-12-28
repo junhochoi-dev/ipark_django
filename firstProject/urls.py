@@ -25,6 +25,7 @@ from django.conf.urls.static import static
 admin.autodiscover()
 admin.site.enable_nav_sidebar = False
 router = routers.DefaultRouter()
+
 router.register('liveData',liveDataViewset)
 router.register('historicalRecord',historicalRecordViewset)
 router.register('memberData',memberDataViewset)

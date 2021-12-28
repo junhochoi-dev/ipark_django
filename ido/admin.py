@@ -19,14 +19,10 @@ class liveDataCustom(admin.ModelAdmin):
 
 
 class MemberResource(resources.ModelResource):
-
-    # def before_import(self, dataset, using_transactions, dry_run, **kwargs):
-    #     headers = ['num','graduate','major','student_num','name','email','phone_num','reserve_product','price']
-    #     dataset.headers = headers
-
+   
     def before_import_row(self, row, **kwargs):
         row['email'] = row['email'].replace('.ac.kr','')
-        row['email'] = row['email'].replace('.com','')
+        row['email'] = row['email'].replace('.com','')       
 
     class Meta:
         model = memberData       
@@ -41,17 +37,18 @@ class memberDataCustom(ImportExportMixin, admin.ModelAdmin):
     list_display = ['name', 'major', 'student_num', 'phone_num', 'reserve_product', 'email','covid_vaccine','Registration','image_tag']
     ordering = ['name']  
     search_fields = ['name', 'major', 'student_num', 'phone_num', 'reserve_product', 'email']
-    actions = ['move_to_Live']  # move_to_Live   
     readonly_fields = ('image_tag',)
 
     list_max_show_all = 5000
     list_per_page = 100
+    
     change_list_template = "upload.html"
-    def get_urls(self):
+    def get_urls(self):                 ## member Data file upload를 위해 url 설정
         urls = super().get_urls()
         my_urls =[ url(r"^upload/$", upload_file)]        
         return my_urls + urls
 
+    actions = ['move_to_Live']  # move_to_Live    , 체크 박스에 선택된 인원들을 live Data로 보내기 위함
     def move_to_Live(self, request, queryset):  #
         qs = queryset.values()  # 체크박스로 입력된 쿼리값들 받아옴
 

@@ -38,15 +38,13 @@ class memberData(models.Model): # 이번달 사용자 DB (액셀에서 받아온
     email = models.CharField(default = '',max_length=128, primary_key=True,help_text='학교 이메일 사용을 권장하며  ***@korea 까지만 저장해주세요!! 부득이하게 gmail 사용시 ***@gmail 까지만 저장해주세요')             # 이메일-primary
     phone_num = models.CharField(max_length=15,default = '',null=True)          # 번호
     image = models.ImageField(upload_to="member",default='default.jpg')  ##프로필 담을 이미지 필드
+    reserve_product =  models.CharField(blank=True,max_length=100,default = '',help_text="ex) 2학기 종일,2학기 아침,11월 아침,11월 종일,여자축구부")   # 예약상품
     
+    ##django admin의 member Data 에서 image 미리보기를 위한 image_tag
     def image_tag(self):
         if(self.image.url != "default.jpg"):
-            return mark_safe('<img src="%s" width="100" height="100" />' % (self.image.url))
-        
-    image_tag.short_description = 'Image'
-
-
-    reserve_product =  models.CharField(blank=True,max_length=100,default = '',help_text="ex) 2학기 종일,2학기 아침,11월 아침,11월 종일,여자축구부")   # 예약상품
+            return mark_safe('<img src="%s" width="100" height="100" />' % (self.image.url))        
+    image_tag.short_description = 'Image'   
 
     price_status = (
         ('120,000', '120,000'),
@@ -67,10 +65,10 @@ class memberData(models.Model): # 이번달 사용자 DB (액셀에서 받아온
     Registration= models.CharField(blank=True,default="", null=False,max_length=30,choices=on_off_status)
     worker = models.CharField(blank=True,default="",max_length=30,help_text="현장 등록 당시 근무자 이름을 기입해주세요")
     memo = models.CharField(blank=True,default="",max_length=30,help_text="특이사항을 기록해주세요")
-    covid_vaccine=models.BooleanField(default =False )
+    covid_vaccine=models.BooleanField(default =False )   ##백신 맞았는지 여부
     objects = models.Manager()
 
-
+###안씀
 class historicalRecord(models.Model): # 과거사용자 DB
     name = models.CharField(max_length=40,default = '')               # 이름
     major = models.CharField(max_length=40,default = '')              # 학과
@@ -80,6 +78,7 @@ class historicalRecord(models.Model): # 과거사용자 DB
     email = models.CharField(max_length=128,default = '') # 이메일
 
     objects = models.Manager()
+###안씀 혹시 몰라서 삭제는 안해놨음
 
 class covidRecord(models.Model): # 코로나 추적 DB & graph show function & auto remove every two weeks
     name = models.CharField(max_length=40,default = '')               # 이름
